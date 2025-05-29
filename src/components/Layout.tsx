@@ -12,9 +12,10 @@ const Layout = () => {
       </header> */}
       <header>
         {location.pathname === "/template-typescript/login" ||
-        location.pathname === "/template-typescript/register" ? null : (
-          <Navbar />
-        )}
+        location.pathname === "/template-typescript/register"
+          ? null
+          : // <Navbar />
+            null}
       </header>
       <main className="flex-grow">
         <Outlet />

@@ -13,7 +13,7 @@ import {
   createTheme,
 } from "@mui/material/styles";
 // Lazy load components
-const Home = React.lazy(() => import("@/pages/Homepage/Homepage"));
+const Home = React.lazy(() => import("@/pages/Table_Example/Homepage"));
 
 function App() {
   const [themeColors, setThemeColors] = useState<any>({});
@@ -75,6 +75,7 @@ function App() {
       },
     },
   });
+
   return (
     <ThemeProvider_mui theme={theme}>
       <ThemeProvider>
