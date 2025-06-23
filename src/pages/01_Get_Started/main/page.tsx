@@ -1,271 +1,388 @@
 import { useState } from "react";
-import CODESnippet from "@/pages/Components/CODESnippet/CODESnippet";
-import DynamicAutocomplete from "./DynamicAutocomplete"; // import component จริง
-import autocompleteCode from "./code.txt?raw";
+import UI_Daisyui_autocomplete from "@/pages/Components/Autocomplete/daisyui-autocomplete/Contents";
+
+interface ComponentItem {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  component: React.ComponentType;
+  tags?: string[];
+  color?: "primary" | "secondary" | "accent" | "info" | "success" | "warning";
+}
 
 const GetStartedPage: React.FC = () => {
-  // State สำหรับ demo
-  const [selectedProduct, setSelectedProduct] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedComponent, setSelectedComponent] =
+    useState<ComponentItem | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // ข้อมูลตัวอย่าง
-  const productOptions = [
-    { product_name: "MacBook Pro", product_id: 1, category: "Laptop" },
-    { product_name: "iPhone 15", product_id: 2, category: "Phone" },
-    { product_name: "iPad Air", product_id: 3, category: "Tablet" },
-    { product_name: "Apple Watch", product_id: 4, category: "Wearable" },
-  ];
-
-  const categoryOptions = [
-    { name: "Electronics", id: 1 },
-    { name: "Clothing", id: 2 },
-    { name: "Books", id: 3 },
-    { name: "Sports", id: 4 },
-  ];
-
-  const statusOptions = [
-    { label: "Active", value: "active", color: "green" },
-    { label: "Inactive", value: "inactive", color: "red" },
-    { label: "Pending", value: "pending", color: "yellow" },
-    { label: "Draft", value: "draft", color: "gray" },
-  ];
-
-  // Code snippets
-  const componentCodeSnippets = [
+  // รายการคอมโพเนนต์ที่มีให้เลือก
+  const componentsList: ComponentItem[] = [
     {
-      title: "DynamicAutocomplete Component",
-      language: "typescript",
-      code: autocompleteCode,
+      id: "daisyui-autocomplete",
+      name: "DaisyUI Autocomplete",
+      description:
+        "Input field with autocomplete functionality using DaisyUI styling",
+      category: "Form Controls",
+      component: UI_Daisyui_autocomplete,
+      tags: ["input", "search", "form", "autocomplete"],
+      color: "primary",
     },
+
+    // เพิ่มคอมโพเนนต์อื่นๆ ได้ที่นี่
   ];
 
-  const basicUsageSnippets = [
-    {
-      title: "Basic Usage",
-      language: "typescript",
-      code: `import DynamicAutocomplete from './DynamicAutocomplete';
+  const categories = [...new Set(componentsList.map((item) => item.category))];
 
-const MyComponent = () => {
-  const [selectedValue, setSelectedValue] = useState('');
-  
-  const options = [
-    { product_name: 'MacBook Pro', product_id: 1 },
-    { product_name: 'iPhone 15', product_id: 2 },
-    { product_name: 'iPad Air', product_id: 3 },
-  ];
+  // สีสำหรับแต่ละ category
+  const categoryColors = {
+    "Form Controls": "primary",
+    Navigation: "secondary",
+    "Data Display": "accent",
+    Feedback: "info",
+    Layout: "success",
+    Utilities: "warning",
+  } as const;
+
+  const handleSelectComponent = (component: ComponentItem) => {
+    setSelectedComponent(component);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedComponent(null);
+  };
 
   return (
-    <DynamicAutocomplete
-      options={options}
-      value={selectedValue}
-      onChange={setSelectedValue}
-      optionKey="product_name"
-      label="Select Product"
-      placeholder="Choose a product..."
-    />
-  );
-};`,
-    },
-  ];
+    <div className="min-h-screen bg-base-200">
+      <div className="container mx-auto p-6 max-w-7xl">
+        {/* Header */}
+        <div className="hero bg-gradient-to-r from-primary to-secondary rounded-2xl mb-8 text-primary-content">
+          <div className="hero-content text-center py-12">
+            <div className="max-w-md ">
+              <h1 className="text-5xl font-bold mb-4 text-nowrap ">
+                🚀 SMART UI
+              </h1>
+              <p className="text-xl opacity-90">
+                สำรวจและทดลองใช้คอมโพเนนต์ต่างๆ ที่พร้อมใช้งาน
+              </p>
+            </div>
+          </div>
+        </div>
 
-  const advancedUsageSnippets = [
-    {
-      title: "Advanced Usage with Different Keys",
-      language: "typescript",
-      code: `// ใช้ key ต่างกันสำหรับ value และ display
-const statusOptions = [
-  { label: 'Active', value: 'active' },
-  { label: 'Inactive', value: 'inactive' },
-];
+        {/* Stats Overview */}
+        <div className="stats stats-vertical lg:stats-horizontal shadow-lg w-full mb-8 bg-base-100">
+          <div className="stat">
+            <div className="stat-figure text-primary">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                className="inline-block w-8 h-8 stroke-current"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                ></path>
+              </svg>
+            </div>
+            <div className="stat-title text-base-content/70">
+              Total Components
+            </div>
+            <div className="stat-value text-primary">
+              {componentsList.length}
+            </div>
+            <div className="stat-desc text-base-content/50">Ready to use</div>
+          </div>
 
-<DynamicAutocomplete
-  options={statusOptions}
-  value={selectedStatus}
-  onChange={setSelectedStatus}
-  optionKey="value"        // ใช้เป็น value
-  displayKey="label"       // แสดงผลเป็น label
-  label="Status"
-  placeholder="Select status..."
-/>`,
-    },
-  ];
+          <div className="stat">
+            <div className="stat-figure text-secondary">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                className="inline-block w-8 h-8 stroke-current"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M13 10V3L4 14h7v7l9-11h-7z"
+                ></path>
+              </svg>
+            </div>
+            <div className="stat-title text-base-content/70">Categories</div>
+            <div className="stat-value text-secondary">{categories.length}</div>
+            <div className="stat-desc text-base-content/50">
+              Different types
+            </div>
+          </div>
 
-  const propsDocumentation = [
-    {
-      title: "Props Documentation",
-      language: "typescript",
-      code: `interface AutocompleteProps {
-  options: any[];              // รายการตัวเลือก
-  value: string;               // ค่าที่เลือกอยู่
-  onChange: (value: string) => void;  // ฟังก์ชันเมื่อเปลี่ยนค่า
-  disabled?: boolean;          // ปิดการใช้งาน (default: false)
-  label?: string;              // ป้ายชื่อ (default: "Select Option")
-  optionKey: string;           // key สำหรับค่า value เช่น 'id', 'name'
-  displayKey?: string;         // key สำหรับแสดงผล (ถ้าไม่ระบุจะใช้ optionKey)
-  placeholder?: string;        // ข้อความตัวอย่าง
-}`,
-    },
-  ];
+          <div className="stat">
+            <div className="stat-figure text-accent">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                className="inline-block w-8 h-8 stroke-current"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"
+                ></path>
+              </svg>
+            </div>
+            <div className="stat-title text-base-content/70">Tech Stack</div>
+            <div className="stat-value text-accent">React + TS</div>
+            <div className="stat-desc text-base-content/50">
+              Modern framework
+            </div>
+          </div>
+        </div>
 
-  return (
-    <div className="container mx-auto p-6 max-w-6xl">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-4 text-primary">
-          DynamicAutocomplete
-        </h1>
-        <p className="text-lg text-base-content/70">
-          A flexible autocomplete component built with MUI that supports dynamic
-          option keys and custom styling.
-        </p>
+        {/* Components Grid */}
+        <div className="space-y-8">
+          {categories.map((category, index) => {
+            const colorKey = category as keyof typeof categoryColors;
+            const themeColor =
+              categoryColors[colorKey] ||
+              (["primary", "secondary", "accent", "info"][index % 4] as const);
+
+            return (
+              <div key={category} className="card bg-base-100 shadow-xl">
+                <div className="card-body">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div
+                      className={`w-2 h-12 bg-${themeColor} rounded-full`}
+                    ></div>
+                    <div className="flex-1">
+                      <h2 className="card-title text-2xl text-base-content">
+                        {category}
+                      </h2>
+                      <p className="text-base-content/60">
+                        Explore {category.toLowerCase()} components
+                      </p>
+                    </div>
+                    <div className={`badge badge-${themeColor} badge-lg`}>
+                      {
+                        componentsList.filter(
+                          (item) => item.category === category
+                        ).length
+                      }{" "}
+                      items
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    {componentsList
+                      .filter((item) => item.category === category)
+                      .map((item) => (
+                        <div
+                          key={item.id}
+                          className="card bg-base-200 hover:bg-base-300 shadow-md hover:shadow-xl cursor-pointer transition-all duration-300 transform hover:scale-105 border border-base-300 hover:border-primary/30"
+                          onClick={() => handleSelectComponent(item)}
+                        >
+                          <div className="card-body p-6">
+                            <div className="flex items-start justify-between mb-3">
+                              <h3 className="card-title text-lg text-base-content">
+                                {item.name}
+                              </h3>
+                              <div
+                                className={`badge badge-${
+                                  item.color || themeColor
+                                } badge-outline badge-sm`}
+                              >
+                                Demo
+                              </div>
+                            </div>
+
+                            <p className="text-base-content/70 text-sm mb-4 line-clamp-2">
+                              {item.description}
+                            </p>
+
+                            {item.tags && (
+                              <div className="flex flex-wrap gap-1 mb-4">
+                                {item.tags.slice(0, 3).map((tag) => (
+                                  <div
+                                    key={tag}
+                                    className="badge badge-neutral badge-xs"
+                                  >
+                                    {tag}
+                                  </div>
+                                ))}
+                                {item.tags.length > 3 && (
+                                  <div className="badge badge-neutral badge-xs">
+                                    +{item.tags.length - 3}
+                                  </div>
+                                )}
+                              </div>
+                            )}
+
+                            <div className="card-actions justify-end">
+                              <button
+                                className={`btn btn-${
+                                  item.color || themeColor
+                                } btn-sm`}
+                              >
+                                View Demo
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  className="h-4 w-4"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                                  />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Modal */}
+        <div className={`modal ${isModalOpen ? "modal-open" : ""}`}>
+          <div className="modal-box max-w-6xl w-11/12 max-h-[90vh] bg-base-100">
+            {selectedComponent && (
+              <>
+                {/* Modal Header */}
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h3 className="font-bold text-3xl text-base-content mb-2">
+                      {selectedComponent.name}
+                    </h3>
+                    <p className="text-base-content/70 text-lg">
+                      {selectedComponent.description}
+                    </p>
+                    <div className="flex items-center gap-2 mt-3">
+                      <div
+                        className={`badge badge-${
+                          selectedComponent.color || "primary"
+                        } badge-lg`}
+                      >
+                        {selectedComponent.category}
+                      </div>
+                      {selectedComponent.tags?.map((tag) => (
+                        <div key={tag} className="badge badge-neutral">
+                          {tag}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <button
+                    className="btn btn-circle btn-ghost hover:btn-error"
+                    onClick={closeModal}
+                  >
+                    <svg
+                      className="w-6 h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                </div>
+
+                <div className="divider"></div>
+
+                {/* Component Preview */}
+                <div className="mockup-window border border-base-300 bg-base-300">
+                  <div className="flex justify-center bg-base-200 border-t border-base-300">
+                    <div className="w-full p-8">
+                      <selectedComponent.component />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Modal Actions */}
+                <div className="modal-action">
+                  <button className="btn btn-neutral" onClick={closeModal}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4 mr-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                    Close
+                  </button>
+                  <button className="btn btn-secondary">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4 mr-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                      />
+                    </svg>
+                    Copy Code
+                  </button>
+                  <button
+                    className={`btn btn-${
+                      selectedComponent.color || "primary"
+                    }`}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4 mr-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                      />
+                    </svg>
+                    View Source
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+          <div
+            className="modal-backdrop bg-neutral/50"
+            onClick={closeModal}
+          ></div>
+        </div>
       </div>
-
-      {/* Live Demo Section */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-6 text-secondary">
-          🚀 Live Demo
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-          {/* Basic Example */}
-          <div className="card bg-base-200 shadow-lg">
-            <div className="card-body">
-              <h3 className="card-title text-lg">Basic Usage</h3>
-              <DynamicAutocomplete
-                options={productOptions}
-                value={selectedProduct}
-                onChange={setSelectedProduct}
-                optionKey="product_name"
-                label="Select Product"
-                placeholder="Choose a product..."
-              />
-              <div className="mt-2 text-sm">
-                <strong>Selected:</strong> {selectedProduct || "None"}
-              </div>
-            </div>
-          </div>
-
-          {/* Different Keys Example */}
-          <div className="card bg-base-200 shadow-lg">
-            <div className="card-body">
-              <h3 className="card-title text-lg">Different Display Key</h3>
-              <DynamicAutocomplete
-                options={categoryOptions}
-                value={selectedCategory}
-                onChange={setSelectedCategory}
-                optionKey="id"
-                displayKey="name"
-                label="Category"
-                placeholder="Select category..."
-              />
-              <div className="mt-2 text-sm">
-                <strong>Selected ID:</strong> {selectedCategory || "None"}
-              </div>
-            </div>
-          </div>
-
-          {/* Disabled Example */}
-          <div className="card bg-base-200 shadow-lg">
-            <div className="card-body">
-              <h3 className="card-title text-lg">Disabled State</h3>
-              <DynamicAutocomplete
-                options={statusOptions}
-                value="active"
-                onChange={() => {}}
-                optionKey="value"
-                displayKey="label"
-                label="Status"
-                disabled={true}
-              />
-              <div className="mt-2 text-sm text-base-content/50">
-                This component is disabled
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Installation */}
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4 text-secondary">
-          📦 Installation
-        </h2>
-        <CODESnippet
-          codeSnippets={[
-            {
-              title: "Install Dependencies",
-              language: "bash",
-              code: `npm install @mui/material @emotion/react @emotion/styled`,
-            },
-          ]}
-        />
-      </section>
-
-      {/* Props Documentation */}
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4 text-secondary">
-          📖 API Reference
-        </h2>
-        <CODESnippet codeSnippets={propsDocumentation} />
-      </section>
-
-      {/* Basic Usage */}
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4 text-secondary">
-          🛠️ Basic Usage
-        </h2>
-        <CODESnippet codeSnippets={basicUsageSnippets} />
-      </section>
-
-      {/* Advanced Usage */}
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4 text-secondary">
-          ⚡ Advanced Usage
-        </h2>
-        <CODESnippet codeSnippets={advancedUsageSnippets} />
-      </section>
-
-      {/* Full Component Code */}
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4 text-secondary">
-          💻 Full Component Source
-        </h2>
-        <CODESnippet codeSnippets={componentCodeSnippets} />
-      </section>
-
-      {/* Features */}
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4 text-secondary">
-          ✨ Features
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="card bg-base-200">
-            <div className="card-body">
-              <h3 className="card-title text-success">🎯 Flexible Keys</h3>
-              <p>Support different keys for value and display</p>
-            </div>
-          </div>
-          <div className="card bg-base-200">
-            <div className="card-body">
-              <h3 className="card-title text-info">🎨 Custom Styling</h3>
-              <p>CSS variables for theming support</p>
-            </div>
-          </div>
-          <div className="card bg-base-200">
-            <div className="card-body">
-              <h3 className="card-title text-warning">🔒 Type Safety</h3>
-              <p>Full TypeScript support</p>
-            </div>
-          </div>
-          <div className="card bg-base-200">
-            <div className="card-body">
-              <h3 className="card-title text-error">🛡️ Error Handling</h3>
-              <p>Safe array handling and validation</p>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 };

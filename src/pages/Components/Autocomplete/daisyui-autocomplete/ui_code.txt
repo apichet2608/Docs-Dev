@@ -18,24 +18,23 @@ const DynamicAutocomplete = ({
   disabled = false,
   label = "Select Option",
   optionKey,
-  displayKey,
   placeholder,
 }: AutocompleteProps) => {
   const safeOptions = Array.isArray(options) ? options : [];
-  const actualDisplayKey = displayKey || optionKey;
-
   const selectedOption =
     safeOptions.find((opt) => opt?.[optionKey] === value) || null;
-
   return (
     <Autocomplete
-      options={safeOptions}
-      getOptionLabel={(option) => option?.[actualDisplayKey] || ""}
+      options={options}
+      getOptionLabel={(option) => option && option?.[optionKey]}
       value={selectedOption}
       onChange={(_e, newValue) => {
+        console.log(`${label} onChange - newValue:`, newValue);
         onChange(newValue ? newValue[optionKey] : "");
       }}
-      sx={{ width: "100%" }}
+      sx={{
+        width: "300px",
+      }}
       disabled={disabled}
       renderInput={(params) => (
         <TextField
@@ -71,6 +70,13 @@ const DynamicAutocomplete = ({
               "& input": {
                 color: "var(--color-base-content)",
                 fontSize: "14px",
+                "&::-webkit-calendar-picker-indicator": {
+                  filter: "var(--color-base-content) opacity(0.7)",
+                  cursor: "pointer",
+                  "&:hover": {
+                    opacity: 1,
+                  },
+                },
               },
             },
             "& .MuiInputLabel-root": {
@@ -87,6 +93,25 @@ const DynamicAutocomplete = ({
                 padding: "0 8px",
                 borderRadius: "4px",
                 transform: "translate(14px, -9px) scale(0.75)",
+              },
+            },
+            // Error state
+            "&.Mui-error": {
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "var(--color-error)",
+                },
+                "&:hover fieldset": {
+                  borderColor: "var(--color-error)",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "var(--color-error)",
+                },
+              },
+              "& .MuiInputLabel-root": {
+                "&.Mui-focused": {
+                  color: "var(--color-error)",
+                },
               },
             },
           }}

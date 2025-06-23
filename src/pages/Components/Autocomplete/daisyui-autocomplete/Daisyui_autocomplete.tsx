@@ -6,12 +6,12 @@ interface AutocompleteProps {
   onChange: (value: string) => void;
   disabled?: boolean;
   label?: string;
-  optionKey: string; // key ที่ใช้สำหรับ value เช่น 'product_name', 'reject_desc'
-  displayKey?: string; // key ที่ใช้สำหรับแสดงผล ถ้าไม่ระบุจะใช้ optionKey
+  optionKey: string;
+  displayKey?: string;
   placeholder?: string;
 }
 
-const DynamicAutocomplete = ({
+const Daisyui_autocomplete = ({
   options = [],
   value,
   onChange,
@@ -21,10 +21,8 @@ const DynamicAutocomplete = ({
   placeholder,
 }: AutocompleteProps) => {
   const safeOptions = Array.isArray(options) ? options : [];
-
   const selectedOption =
     safeOptions.find((opt) => opt?.[optionKey] === value) || null;
-  console.log(`selectedOption:`, safeOptions);
   return (
     <Autocomplete
       options={options}
@@ -126,4 +124,4 @@ const DynamicAutocomplete = ({
   );
 };
 
-export default DynamicAutocomplete;
+export default Daisyui_autocomplete;
