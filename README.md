@@ -1,27 +1,58 @@
-📄 เริ่มต้น Git Repository และ Push ขึ้น Remote
-# 1. เริ่มต้น Git repository
-git init
+# 🌟 MyApp
 
-# 2. สร้างและเปลี่ยนชื่อ branch เป็น main
-git branch -M main
+Fullstack-ready web application starter with modern UI/UX using:
 
-# 3. เพิ่มไฟล์ทั้งหมดเข้า staging
-git add .
+- ⚡️ **Vite** — ultra-fast frontend tooling
+- ⚛️ **React 18**
+- 🎨 **MUI** — component-rich material design
+- 🧁 **TailwindCSS + DaisyUI** — utility-first with themeable UI components
+- 📊 **MUI X Data Grid** — advanced table and chart display
+- 📦 **Axios** — for API integration
+- 📆 **Datepicker**, **Toast**, **SweetAlert2** — polished user interactions
+- 🎨 **Framer Motion**, **Lucide Icons**, **Chart.js**, **React Chart.js 2**
+- 🔒 **PWA-ready** via `vite-plugin-pwa`
 
-# 4. Commit ครั้งแรก
-git commit -m "first commit"
+---
 
-# 5. เพิ่ม remote origin
-git remote add origin http://10.17.66.143:8005/components/docs-components.git
+## 🚀 Features
 
-# 6. Push ขึ้น remote โดยใช้ remote name: smartfactory
-git push -u smartfactory main
-หมายเหตุ: หากคุณยังไม่ได้ตั้งชื่อ remote ว่า smartfactory มาก่อน คำสั่ง git push -u smartfactory main จะล้มเหลว
-ให้ใช้คำสั่งนี้แทน:
+- ✅ **Modern UI** with Tailwind + DaisyUI + MUI
+- ✅ **Reusable components** with enterprise style
+- ✅ **Built-in charting** (Chart.js, react-chartjs-2)
+- ✅ **Grid system** (MUI X Data Grid)
+- ✅ **Theming** (via `next-themes`, Tailwind, DaisyUI)
+- ✅ **Custom fonts**: Inter Variable, Luckiest Guy
+- ✅ **Form inputs, date pickers, toast messages**
+- ✅ **API ready** with Axios
+- ✅ **Animation ready** with React Spring + Framer Motion
+- ✅ **Syntax highlighting**, snowfall effect 🎉
+- ✅ **Offline ready** with PWA support
 
-# เพิ่ม remote ด้วยชื่อ smartfactory
-git remote add smartfactory http://10.17.66.143:8005/components/docs-components.git
+---
 
-# จากนั้น push
-git push -u smartfactory main
-หากคุณต้องการให้เขียนในรูปแบบ README.md หรือ shell script ก็แจ้งได้ครับ.
+## 📦 Tech Stack
+
+| Category       | Tech                                                  |
+|----------------|--------------------------------------------------------|
+| Core           | React 18, Vite, TypeScript                            |
+| Styling        | TailwindCSS 4, DaisyUI 5, Emotion (for MUI)           |
+| UI Components  | MUI 6, DaisyUI, Custom Themes                         |
+| Data Display   | MUI X DataGrid, Chart.js, react-chartjs-2            |
+| Utilities      | Axios, React Router DOM, Framer Motion, Faker        |
+| UX Enhancements| SweetAlert2, React Toastify, DatePicker, Snowfall    |
+| PWA            | vite-plugin-pwa                                       |
+
+---
+
+## 📂 Project Structure (แนะนำ)
+
+```bash
+src/
+├── assets/          # Icons, images, etc.
+├── components/      # Reusable components (Button, Card, etc.)
+├── pages/           # Main page routes
+├── services/        # Axios API services
+├── hooks/           # Custom React hooks
+├── styles/          # Tailwind + DaisyUI config
+├── App.tsx
+└── main.tsx
