@@ -13,7 +13,10 @@ import {
   createTheme,
 } from "@mui/material/styles";
 // Lazy load components
-const Home = React.lazy(() => import("@/pages/Table_Example/Homepage"));
+const Home = React.lazy(() => import("@/pages/HOME/main/page"));
+const GetStartedPage = React.lazy(
+  () => import("@/pages/01_Get_Started/main/page")
+);
 
 function App() {
   const [themeColors, setThemeColors] = useState<any>({});
@@ -93,6 +96,11 @@ function App() {
                 <Route
                   path="/template-typescript/homepage"
                   element={<Home />}
+                />
+                {/* GetStartedPage */}
+                <Route
+                  path="/template-typescript/get-started"
+                  element={<GetStartedPage />}
                 />
               </Route>
             </Routes>
