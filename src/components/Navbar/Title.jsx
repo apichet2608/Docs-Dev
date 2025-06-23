@@ -3,8 +3,8 @@ import { useLocation } from "react-router-dom";
 
 // Title mappings for paths
 const titleMap = {
-  "/template-typescript": "Template Typescript",
-  "/template-typescript/homepage": "Template Typescript",
+  "/smart-factory-ui": "Template Typescript",
+  "/smart-factory-ui/homepage": "Template Typescript",
 };
 
 function Title() {

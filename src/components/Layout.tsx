@@ -11,11 +11,10 @@ const Layout = () => {
         <Navbar />
       </header> */}
       <header>
-        {location.pathname === "/template-typescript/login" ||
-        location.pathname === "/template-typescript/register"
-          ? null
-          : // <Navbar />
-            null}
+        {location.pathname === "/smart-factory-ui/login" ||
+        location.pathname === "/smart-factory-ui/register" ? null : (
+          <Navbar />
+        )}
       </header>
       <main className="flex-grow">
         <Outlet />

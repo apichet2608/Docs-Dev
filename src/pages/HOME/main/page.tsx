@@ -496,7 +496,7 @@ const HomePage: React.FC = () => {
               <button
                 className="btn btn-primary btn-lg mr-4"
                 onClick={() =>
-                  (window.location.href = "/template-typescript/get-started")
+                  (window.location.href = "/smart-factory-ui/get-started")
                 }
               >
                 Get Started

@@ -85,21 +85,16 @@ function App() {
         <BrowserRouter>
           <Suspense fallback={<Loading />}>
             <Routes>
-              <Route path="/template-typescript" element={<Layout />}>
+              <Route path="/smart-factory-ui" element={<Layout />}>
                 {/* Public Routes */}
                 <Route
                   index
-                  element={
-                    <Navigate to="/template-typescript/homepage" replace />
-                  }
+                  element={<Navigate to="/smart-factory-ui/homepage" replace />}
                 />
-                <Route
-                  path="/template-typescript/homepage"
-                  element={<Home />}
-                />
+                <Route path="/smart-factory-ui/homepage" element={<Home />} />
                 {/* GetStartedPage */}
                 <Route
-                  path="/template-typescript/get-started"
+                  path="/smart-factory-ui/get-started"
                   element={<GetStartedPage />}
                 />
               </Route>

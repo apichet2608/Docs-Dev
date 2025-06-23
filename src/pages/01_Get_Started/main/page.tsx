@@ -151,7 +151,7 @@ const GetStartedPage: React.FC = () => {
             const colorKey = category as keyof typeof categoryColors;
             const themeColor =
               categoryColors[colorKey] ||
-              (["primary", "secondary", "accent", "info"][index % 4] as const);
+              (["primary", "secondary", "accent", "info"][index % 4] as any);
 
             return (
               <div key={category} className="card bg-base-100 shadow-xl">

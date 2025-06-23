@@ -18,7 +18,7 @@ export const Link = () => {
     Title: "TITLE",
     Iconsmain: Iconsmain, // ใช้การ import รูปภาพที่ถูกต้อง
     SubPath: [
-      { path: "/template-typescript/homepage", label: "Template Typescript" },
+      { path: "/smart-factory-ui/homepage", label: "Template Typescript" },
     ],
   };
 

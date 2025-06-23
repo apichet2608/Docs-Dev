@@ -55,7 +55,7 @@ const manifestForPlugIn: Partial<VitePWAOptions> = {
 export default defineConfig({
   plugins: [react(), VitePWA(manifestForPlugIn), tailwindcss(),
   ],
-  base: "/template-typescript",
+  base: "/smart-factory-ui",
   build: {
     sourcemap: true,
   },
