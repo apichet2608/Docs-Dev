@@ -33,7 +33,7 @@ const Daisyui_autocomplete = ({
         onChange(newValue ? newValue[optionKey] : "");
       }}
       sx={{
-        width: "300px",
+        width: "100%",
       }}
       disabled={disabled}
       renderInput={(params) => (

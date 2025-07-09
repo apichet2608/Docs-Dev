@@ -12,7 +12,7 @@ const Layout = () => {
       </header> */}
       <header>
         {location.pathname === "/smart-factory-ui/login" ||
-        location.pathname === "/smart-factory-ui/register" ? null : (
+        location.pathname === "/smart-factory-ui/homepage" ? null : (
           <Navbar />
         )}
       </header>

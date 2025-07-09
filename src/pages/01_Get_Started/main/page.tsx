@@ -1,6 +1,19 @@
 import { useState } from "react";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  IconButton,
+  Typography,
+  Chip,
+  Box,
+  Paper,
+} from "@mui/material";
+import { Close as CloseIcon } from "@mui/icons-material";
 import UI_Daisyui_autocomplete from "@/pages/Components/Autocomplete/daisyui-autocomplete/Contents";
-
+import InputFieldComponents from "@/pages/Components/InputField/Contetnts";
 interface ComponentItem {
   id: string;
   name: string;
@@ -9,26 +22,36 @@ interface ComponentItem {
   component: React.ComponentType;
   tags?: string[];
   color?: "primary" | "secondary" | "accent" | "info" | "success" | "warning";
+  create_by: string;
 }
 
 const GetStartedPage: React.FC = () => {
   const [selectedComponent, setSelectedComponent] =
     useState<ComponentItem | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   // รายการคอมโพเนนต์ที่มีให้เลือก
   const componentsList: ComponentItem[] = [
     {
       id: "daisyui-autocomplete",
-      name: "DaisyUI Autocomplete",
-      description:
-        "Input field with autocomplete functionality using DaisyUI styling",
+      name: "Autocomplete",
+      description: "Input field with autocomplete functionality using styling",
       category: "Form Controls",
       component: UI_Daisyui_autocomplete,
       tags: ["input", "search", "form", "autocomplete"],
       color: "primary",
+      create_by: "APICHET",
     },
-
+    {
+      id: "daisyui-input-field",
+      name: "Input Field",
+      description: "Input field with various styles and variants using DaisyUI",
+      category: "Form Controls",
+      component: InputFieldComponents,
+      tags: ["input", "form", "styles", "variants"],
+      color: "primary",
+      create_by: "APICHET",
+    },
     // เพิ่มคอมโพเนนต์อื่นๆ ได้ที่นี่
   ];
 
@@ -46,11 +69,11 @@ const GetStartedPage: React.FC = () => {
 
   const handleSelectComponent = (component: ComponentItem) => {
     setSelectedComponent(component);
-    setIsModalOpen(true);
+    setIsDialogOpen(true);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const closeDialog = () => {
+    setIsDialogOpen(false);
     setSelectedComponent(null);
   };
 
@@ -222,7 +245,9 @@ const GetStartedPage: React.FC = () => {
                                 )}
                               </div>
                             )}
-
+                            <div className="badge badge-neutral badge-xs">
+                              Created by: {item.create_by}
+                            </div>
                             <div className="card-actions justify-end">
                               <button
                                 className={`btn btn-${
@@ -256,132 +281,116 @@ const GetStartedPage: React.FC = () => {
           })}
         </div>
 
-        {/* Modal */}
-        <div className={`modal ${isModalOpen ? "modal-open" : ""}`}>
-          <div className="modal-box max-w-6xl w-11/12 max-h-[90vh] bg-base-100">
-            {selectedComponent && (
-              <>
-                {/* Modal Header */}
-                <div className="flex items-center justify-between mb-6">
-                  <div>
-                    <h3 className="font-bold text-3xl text-base-content mb-2">
+        {/* MUI Dialog */}
+        <Dialog
+          open={isDialogOpen}
+          onClose={closeDialog}
+          // fullScreen
+          maxWidth="xl"
+          fullWidth
+          // PaperProps={{
+          //   sx: {
+          //     maxHeight: "90vh",
+          //     borderRadius: 3,
+          //     backgroundColor:
+          //       "var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)))",
+          //   },
+          // }}
+        >
+          {selectedComponent && (
+            <>
+              <DialogTitle sx={{ p: 3, pb: 1 }}>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  <Box>
+                    <Typography
+                      variant="h4"
+                      component="h2"
+                      fontWeight="bold"
+                      color="primary"
+                      gutterBottom
+                    >
                       {selectedComponent.name}
-                    </h3>
-                    <p className="text-base-content/70 text-lg">
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      color="text.secondary"
+                      sx={{ mb: 2 }}
+                    >
                       {selectedComponent.description}
-                    </p>
-                    <div className="flex items-center gap-2 mt-3">
-                      <div
-                        className={`badge badge-${
-                          selectedComponent.color || "primary"
-                        } badge-lg`}
-                      >
-                        {selectedComponent.category}
-                      </div>
+                    </Typography>
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      gap={1}
+                      flexWrap="wrap"
+                    >
+                      <Chip
+                        label={selectedComponent.category}
+                        color="primary"
+                        variant="filled"
+                        size="medium"
+                      />
                       {selectedComponent.tags?.map((tag) => (
-                        <div key={tag} className="badge badge-neutral">
-                          {tag}
-                        </div>
+                        <Chip
+                          key={tag}
+                          label={tag}
+                          variant="outlined"
+                          size="small"
+                          color="default"
+                        />
                       ))}
-                    </div>
-                  </div>
-                  <button
-                    className="btn btn-circle btn-ghost hover:btn-error"
-                    onClick={closeModal}
+                    </Box>
+                  </Box>
+                  <IconButton
+                    aria-label="close"
+                    onClick={closeDialog}
+                    sx={{
+                      color: "text.secondary",
+                      "&:hover": {
+                        color: "error.main",
+                        backgroundColor: "error.light",
+                      },
+                    }}
                   >
-                    <svg
-                      className="w-6 h-6"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
-                </div>
+                    <CloseIcon />
+                  </IconButton>
+                </Box>
+              </DialogTitle>
 
-                <div className="divider"></div>
+              <DialogContent dividers sx={{ p: 3 }}>
+                <Paper
+                  elevation={2}
+                  sx={{
+                    p: 4,
+                    borderRadius: 2,
+                    backgroundColor:
+                      "var(--fallback-b2,oklch(var(--b2)/var(--tw-bg-opacity)))",
+                    border:
+                      "1px solid var(--fallback-b3,oklch(var(--b3)/var(--tw-bg-opacity)))",
+                  }}
+                >
+                  <selectedComponent.component />
+                </Paper>
+              </DialogContent>
 
-                {/* Component Preview */}
-                <div className="mockup-window border border-base-300 bg-base-300">
-                  <div className="flex justify-center bg-base-200 border-t border-base-300">
-                    <div className="w-full p-8">
-                      <selectedComponent.component />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Modal Actions */}
-                <div className="modal-action">
-                  <button className="btn btn-neutral" onClick={closeModal}>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 mr-2"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                    Close
-                  </button>
-                  <button className="btn btn-secondary">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 mr-2"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
-                      />
-                    </svg>
-                    Copy Code
-                  </button>
-                  <button
-                    className={`btn btn-${
-                      selectedComponent.color || "primary"
-                    }`}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 mr-2"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-                      />
-                    </svg>
-                    View Source
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
-          <div
-            className="modal-backdrop bg-neutral/50"
-            onClick={closeModal}
-          ></div>
-        </div>
+              {/* <DialogActions sx={{ p: 3, pt: 2 }}>
+                <Button
+                  onClick={closeDialog}
+                  variant="outlined"
+                  color="inherit"
+                  startIcon={<CloseIcon />}
+                  sx={{ minWidth: 120 }}
+                >
+                  Close
+                </Button>
+              </DialogActions> */}
+            </>
+          )}
+        </Dialog>
       </div>
     </div>
   );
