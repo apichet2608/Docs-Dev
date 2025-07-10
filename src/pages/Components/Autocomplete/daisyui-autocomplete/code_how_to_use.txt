@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Daisyui_autocomplete from "./Daisyui_autocomplete"; // import component จริง
 
-const DynamicAutocomplete = () => {
+const Main = () => {
 
   const [selectedProduct, setSelectedProduct] = useState("");
 
@@ -9,7 +9,6 @@ const DynamicAutocomplete = () => {
     { product_name: "MacBook Pro", id: 1, category: "Laptop" },
     { product_name: "iPhone 15", id: 2, category: "Phone" },
     { product_name: "iPad Air", id: 3, category: "Tablet" },
-    { product_name: "Apple Watch", id: 4, category: "Wearable" },
   ];
 
   return (
@@ -21,8 +20,9 @@ const DynamicAutocomplete = () => {
         optionKey="product_name"
         label="Select Product"
         placeholder="Choose a product..."
+        width="300px"
       />
     </>
   );
 };
-export default DynamicAutocomplete;
+export default Main;

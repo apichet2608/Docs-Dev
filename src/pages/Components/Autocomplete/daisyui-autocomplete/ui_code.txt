@@ -9,9 +9,10 @@ interface AutocompleteProps {
   optionKey: string;
   displayKey?: string;
   placeholder?: string;
+  width?: string;
 }
 
-const DynamicAutocomplete = ({
+const Daisyui_autocomplete = ({
   options = [],
   value,
   onChange,
@@ -19,6 +20,7 @@ const DynamicAutocomplete = ({
   label = "Select Option",
   optionKey,
   placeholder,
+  width,
 }: AutocompleteProps) => {
   const safeOptions = Array.isArray(options) ? options : [];
   const selectedOption =
@@ -33,7 +35,7 @@ const DynamicAutocomplete = ({
         onChange(newValue ? newValue[optionKey] : "");
       }}
       sx={{
-        width: "300px",
+        width: width,
       }}
       disabled={disabled}
       renderInput={(params) => (
@@ -124,4 +126,4 @@ const DynamicAutocomplete = ({
   );
 };
 
-export default DynamicAutocomplete;
+export default Daisyui_autocomplete;

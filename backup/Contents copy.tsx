@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Daisyui_autocomplete from "./Daisyui_autocomplete";
+import Daisyui_autocomplete from "../src/pages/Components/Autocomplete/daisyui-autocomplete/Daisyui_autocomplete";
 import CODESnippet from "@/pages/Components/CODESnippet/CODESnippet";
 import code_how_to_use from "./code_how_to_use.txt?raw";
 import autocompleteCode from "./ui_code.txt?raw";

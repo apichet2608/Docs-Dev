@@ -34,7 +34,7 @@ const GetStartedPage: React.FC = () => {
   const componentsList: ComponentItem[] = [
     {
       id: "daisyui-autocomplete",
-      name: "Autocomplete",
+      name: "Autocomplete (MUI + DaisyUI)",
       description: "Input field with autocomplete functionality using styling",
       category: "Form Controls",
       component: UI_Daisyui_autocomplete,
@@ -285,7 +285,7 @@ const GetStartedPage: React.FC = () => {
         <Dialog
           open={isDialogOpen}
           onClose={closeDialog}
-          // fullScreen
+          fullScreen
           maxWidth="xl"
           fullWidth
           // PaperProps={{
@@ -361,8 +361,8 @@ const GetStartedPage: React.FC = () => {
                 </Box>
               </DialogTitle>
 
-              <DialogContent dividers sx={{ p: 3 }}>
-                <Paper
+              <DialogContent dividers sx={{ p: 0 }}>
+                {/* <Paper
                   elevation={2}
                   sx={{
                     p: 4,
@@ -372,9 +372,9 @@ const GetStartedPage: React.FC = () => {
                     border:
                       "1px solid var(--fallback-b3,oklch(var(--b3)/var(--tw-bg-opacity)))",
                   }}
-                >
-                  <selectedComponent.component />
-                </Paper>
+                > */}
+                <selectedComponent.component />
+                {/* </Paper> */}
               </DialogContent>
 
               {/* <DialogActions sx={{ p: 3, pt: 2 }}>

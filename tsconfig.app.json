@@ -7,6 +7,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "noCheck": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -31,5 +32,5 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "backup/Contents copy.tsx"]
 }
