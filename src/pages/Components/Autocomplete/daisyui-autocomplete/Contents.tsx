@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, version } from "react";
 import Daisyui_autocomplete from "./Daisyui_autocomplete";
 import CODESnippet from "@/pages/Components/CODESnippet/CODESnippet";
 import code_how_to_use from "./code_how_to_use.txt?raw";
 import autocompleteCode from "./ui_code.txt?raw";
+import { s } from "node_modules/framer-motion/dist/types.d-6pKw1mTI";
 
 const UI_Daisyui_autocomplete = () => {
   const [selectedProduct, setSelectedProduct] = useState("");
@@ -36,50 +37,14 @@ const UI_Daisyui_autocomplete = () => {
 
   const basicUsageSnippets = [
     {
-      title: "Basic Usage",
+      title: "Main.tsx",
       language: "typescript",
       code: code_how_to_use,
     },
-  ];
-
-  const componentCodeSnippets = [
     {
-      title: "DaisyUI Autocomplete Component",
+      title: "Daisyui_autocomplete.tsx",
       language: "typescript",
       code: autocompleteCode,
-    },
-  ];
-
-  const features = [
-    {
-      icon: "🔍",
-      title: "Smart Search",
-      description: "Real-time filtering with intelligent matching",
-    },
-    {
-      icon: "⚡",
-      title: "Fast Performance",
-      description: "Optimized for large datasets with virtual scrolling",
-    },
-    {
-      icon: "🎨",
-      title: "DaisyUI Styled",
-      description: "Beautiful themes and consistent design system",
-    },
-    {
-      icon: "♿",
-      title: "Accessible",
-      description: "Full keyboard navigation and screen reader support",
-    },
-    {
-      icon: "📱",
-      title: "Mobile Friendly",
-      description: "Touch-optimized interface for all devices",
-    },
-    {
-      icon: "🔧",
-      title: "Customizable",
-      description: "Flexible props and styling options",
     },
   ];
 
@@ -124,39 +89,7 @@ const UI_Daisyui_autocomplete = () => {
 
   return (
     <div className="container mx-auto p-6 space-y-6">
-      {/* Header Section */}
-      <div className="text-center space-y-4">
-        <div className="flex items-center justify-center gap-3">
-          <div className="p-3 bg-primary/10 rounded-full">
-            <span className="text-3xl">🎯</span>
-          </div>
-          <h1 className="text-4xl font-bold text-primary">
-            DaisyUI Autocomplete
-          </h1>
-        </div>
-        <p className="text-lg text-base-content/70 max-w-2xl mx-auto">
-          A powerful and beautiful autocomplete component built with DaisyUI.
-          Perfect for search interfaces, form inputs, and data selection.
-        </p>
-      </div>
-
-      {/* Features Grid */}
-      <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {features.map((feature, index) => (
-          <div
-            key={index}
-            className="card bg-base-100 shadow-lg hover:shadow-xl transition-shadow"
-          >
-            <div className="card-body">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="text-2xl">{feature.icon}</span>
-                <h3 className="card-title text-lg">{feature.title}</h3>
-              </div>
-              <p className="text-base-content/70">{feature.description}</p>
-            </div>
-          </div>
-        ))}
-      </section>
+      {/* Installation Section */}
 
       {/* Live Demo Section */}
       <section className="space-y-8">
@@ -169,7 +102,7 @@ const UI_Daisyui_autocomplete = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 gap-8">
           {/* Product Search */}
           <div className="card bg-base-100 shadow-lg">
             <div className="card-body">
@@ -184,25 +117,135 @@ const UI_Daisyui_autocomplete = () => {
                 label="Select Product"
                 placeholder="Search for Apple products..."
               />
-              <div className="join join-vertical bg-base-100">
-                <div className="collapse collapse-arrow join-item border-base-300 border">
-                  <input type="radio" name="my-accordion-4" />
-                  <div className="collapse-title font-semibold">CODE</div>
-                  <div className="collapse-content">
-                    <section className="space-y-6">
-                      <div className="flex items-center gap-3">
-                        <span className="text-2xl">🛠️</span>
-                        <h2 className="text-3xl font-bold text-secondary">
-                          Usage Examples
-                        </h2>
-                      </div>
-                      <div className="card bg-base-100 shadow-lg">
-                        <div className="card-body">
-                          <CODESnippet codeSnippets={basicUsageSnippets} />
+              {/* name of each tab group should be unique */}
+              <div className="tabs tabs-border">
+                <input
+                  type="radio"
+                  name="my_tabs_2"
+                  className="tab"
+                  aria-label="CODE"
+                />
+                <div className="tab-content border-base-300 bg-base-100">
+                  <div className="tabs tabs-border">
+                    {basicUsageSnippets.map((snippet, index) => (
+                      <>
+                        <input
+                          key={index}
+                          type="radio"
+                          name="tabs-code"
+                          className="tab"
+                          aria-label={snippet.title}
+                        />
+                        <div className="tab-content border-base-300 bg-base-100 p-4">
+                          <CODESnippet
+                            codeSnippets={[basicUsageSnippets[index]]}
+                          />
+                        </div>
+                      </>
+                    ))}
+                  </div>
+                </div>
+
+                <input
+                  type="radio"
+                  name="my_tabs_2"
+                  className="tab"
+                  aria-label="PROPS"
+                  defaultChecked
+                />
+                <div className="tab-content border-base-300 bg-base-100 p-10">
+                  {/* Props Documentation */}
+                  <section className="space-y-6">
+                    <div className="flex items-center gap-3">
+                      <span className="text-2xl">📋</span>
+                      <h2 className="text-3xl font-bold text-secondary">
+                        Props Reference
+                      </h2>
+                    </div>
+                    <div className="card bg-base-100 shadow-lg">
+                      <div className="card-body">
+                        <div className="overflow-x-auto">
+                          <table className="table table-zebra">
+                            <thead>
+                              <tr className="text-base">
+                                <th>Prop</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Description</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {props.map((prop, index) => (
+                                <tr key={index}>
+                                  <td className="font-mono text-primary font-semibold">
+                                    {prop.name}
+                                  </td>
+                                  <td className="font-mono text-secondary text-sm">
+                                    {prop.type}
+                                  </td>
+                                  <td>
+                                    <span
+                                      className={`badge ${
+                                        prop.required
+                                          ? "badge-error"
+                                          : "badge-ghost"
+                                      }`}
+                                    >
+                                      {prop.required ? "Required" : "Optional"}
+                                    </span>
+                                  </td>
+                                  <td className="text-sm">
+                                    {prop.description}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
                         </div>
                       </div>
-                    </section>
-                  </div>
+                    </div>
+                  </section>
+                </div>
+
+                <input
+                  type="radio"
+                  name="my_tabs_2"
+                  className="tab"
+                  aria-label="Installation"
+                />
+                <div className="tab-content border-base-300 bg-base-100 p-10">
+                  <section className="space-y-6">
+                    <div className="flex items-center gap-3">
+                      <span className="text-2xl">📦</span>
+                      <h2 className="text-3xl font-bold text-secondary">
+                        Installation
+                      </h2>
+                    </div>
+                    <div className="card bg-base-100 shadow-lg">
+                      <div className="card-body">
+                        <div className="grid grid-cols-1">
+                          <CODESnippet
+                            codeSnippets={[
+                              {
+                                title: "Material UI",
+                                language: "bash",
+                                code: `npm install @mui/material @emotion/react @emotion/styled`,
+                              },
+                            ]}
+                          />
+                          <CODESnippet
+                            codeSnippets={[
+                              {
+                                title: "Daisy UI",
+                                language: "bash",
+                                code: `npm i -D daisyui@latest`,
+                              },
+                            ]}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </section>
                 </div>
               </div>
               {selectedProduct && (
@@ -213,134 +256,6 @@ const UI_Daisyui_autocomplete = () => {
                 </div>
               )}
             </div>
-          </div>
-
-          {/* Country Search */}
-          <div className="card bg-base-100 shadow-lg">
-            <div className="card-body">
-              <h3 className="card-title text-primary mb-4">
-                🌍 Country Search
-              </h3>
-              <Daisyui_autocomplete
-                options={countryOptions}
-                value={selectedCountry}
-                onChange={setSelectedCountry}
-                optionKey="name"
-                label="Select Country"
-                placeholder="Choose your country..."
-              />
-              {selectedCountry && (
-                <div className="mt-4 p-4 bg-info/10 rounded-lg">
-                  <p className="text-sm text-info">
-                    ✅ Selected: <strong>{selectedCountry}</strong>
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Skills Search */}
-          <div className="card bg-base-100 shadow-lg lg:col-span-2">
-            <div className="card-body">
-              <h3 className="card-title text-primary mb-4">💪 Skills Search</h3>
-              <Daisyui_autocomplete
-                options={skillOptions}
-                value={selectedSkill}
-                onChange={setSelectedSkill}
-                optionKey="skill"
-                label="Select Your Skill"
-                placeholder="What's your expertise?"
-              />
-              {selectedSkill && (
-                <div className="mt-4 p-4 bg-warning/10 rounded-lg">
-                  <p className="text-sm text-warning">
-                    ✅ Selected: <strong>{selectedSkill}</strong>
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Installation Section */}
-      <section className="space-y-6">
-        <div className="flex items-center gap-3">
-          <span className="text-2xl">📦</span>
-          <h2 className="text-3xl font-bold text-secondary">Installation</h2>
-        </div>
-        <div className="card bg-base-100 shadow-lg">
-          <div className="card-body">
-            <CODESnippet
-              codeSnippets={[
-                {
-                  title: "Install Dependencies",
-                  language: "bash",
-                  code: `npm install @mui/material @emotion/react @emotion/styled`,
-                },
-              ]}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Props Documentation */}
-      <section className="space-y-6">
-        <div className="flex items-center gap-3">
-          <span className="text-2xl">📋</span>
-          <h2 className="text-3xl font-bold text-secondary">Props Reference</h2>
-        </div>
-        <div className="card bg-base-100 shadow-lg">
-          <div className="card-body">
-            <div className="overflow-x-auto">
-              <table className="table table-zebra">
-                <thead>
-                  <tr className="text-base">
-                    <th>Prop</th>
-                    <th>Type</th>
-                    <th>Required</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {props.map((prop, index) => (
-                    <tr key={index}>
-                      <td className="font-mono text-primary font-semibold">
-                        {prop.name}
-                      </td>
-                      <td className="font-mono text-secondary text-sm">
-                        {prop.type}
-                      </td>
-                      <td>
-                        <span
-                          className={`badge ${
-                            prop.required ? "badge-error" : "badge-ghost"
-                          }`}
-                        >
-                          {prop.required ? "Required" : "Optional"}
-                        </span>
-                      </td>
-                      <td className="text-sm">{prop.description}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Component Source Code */}
-      <section className="space-y-6">
-        <div className="flex items-center gap-3">
-          <span className="text-2xl">💻</span>
-          <h2 className="text-3xl font-bold text-secondary">
-            Component Source
-          </h2>
-        </div>
-        <div className="card bg-base-100 shadow-lg">
-          <div className="card-body">
-            <CODESnippet codeSnippets={componentCodeSnippets} />
           </div>
         </div>
       </section>
