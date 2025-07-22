@@ -109,6 +109,13 @@ const UI_Daisyui_autocomplete = () => {
       required: true,
       description: "Key to display from option object",
     },
+    // displayKey
+    {
+      name: "displayKey",
+      type: "string",
+      required: false,
+      description: "Key to display from option object",
+    },
     {
       name: "label",
       type: "string",

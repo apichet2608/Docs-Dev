@@ -10,10 +10,17 @@ import {
   Chip,
   Box,
   Paper,
+  Breakpoint, // 1. Import Breakpoint type
 } from "@mui/material";
-import { Close as CloseIcon } from "@mui/icons-material";
+import {
+  Close as CloseIcon,
+  Fullscreen as FullscreenIcon,
+  FullscreenExit as FullscreenExitIcon,
+} from "@mui/icons-material";
 import UI_Daisyui_autocomplete from "@/pages/Components/Autocomplete/daisyui-autocomplete/Contents";
 import InputFieldComponents from "@/pages/Components/InputField/Contetnts";
+
+// 2. เพิ่ม maxWidth ใน Interface
 interface ComponentItem {
   id: string;
   name: string;
@@ -23,14 +30,21 @@ interface ComponentItem {
   tags?: string[];
   color?: "primary" | "secondary" | "accent" | "info" | "success" | "warning";
   create_by: string;
+  /**
+   * Sets the max-width of the dialog.
+   * Can be 'xs', 'sm', 'md', 'lg', 'xl', or false.
+   * @default 'xl'
+   */
+  maxWidth?: Breakpoint | false;
 }
 
 const GetStartedPage: React.FC = () => {
   const [selectedComponent, setSelectedComponent] =
     useState<ComponentItem | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(false);
 
-  // รายการคอมโพเนนต์ที่มีให้เลือก
+  // ตัวอย่าง: คอมโพเนนต์หนึ่งใช้ maxWidth='md' และอีกอันใช้ default ('xl')
   const componentsList: ComponentItem[] = [
     {
       id: "daisyui-autocomplete",
@@ -41,6 +55,7 @@ const GetStartedPage: React.FC = () => {
       tags: ["input", "search", "form", "autocomplete"],
       color: "primary",
       create_by: "APICHET",
+      maxWidth: "xl", // กำหนด maxWidth ที่นี่
     },
     {
       id: "daisyui-input-field",
@@ -51,13 +66,11 @@ const GetStartedPage: React.FC = () => {
       tags: ["input", "form", "styles", "variants"],
       color: "primary",
       create_by: "APICHET",
+      // ไม่ได้กำหนด maxWidth ที่นี่ จะใช้ค่า default 'xl'
     },
-    // เพิ่มคอมโพเนนต์อื่นๆ ได้ที่นี่
   ];
 
   const categories = [...new Set(componentsList.map((item) => item.category))];
-
-  // สีสำหรับแต่ละ category
   const categoryColors = {
     "Form Controls": "primary",
     Navigation: "secondary",
@@ -75,11 +88,17 @@ const GetStartedPage: React.FC = () => {
   const closeDialog = () => {
     setIsDialogOpen(false);
     setSelectedComponent(null);
+    setIsFullScreen(false);
+  };
+
+  const toggleFullScreen = () => {
+    setIsFullScreen(!isFullScreen);
   };
 
   return (
     <div className="min-h-screen bg-base-200">
       <div className="container mx-auto p-6 max-w-7xl">
+        {/* ... (โค้ดส่วนอื่น ๆ ไม่มีการเปลี่ยนแปลง) ... */}
         {/* Header */}
         <div className="hero bg-gradient-to-r from-primary to-secondary rounded-2xl mb-8 text-primary-content">
           <div className="hero-content text-center py-12">
@@ -280,114 +299,69 @@ const GetStartedPage: React.FC = () => {
             );
           })}
         </div>
-
         {/* MUI Dialog */}
         <Dialog
           open={isDialogOpen}
           onClose={closeDialog}
-          fullScreen
-          maxWidth="xl"
+          fullScreen={isFullScreen}
+          // 3. ใช้ maxWidth จาก selectedComponent หรือใช้ 'xl' เป็นค่า default
+          maxWidth={selectedComponent?.maxWidth ?? "xl"}
           fullWidth
-          // PaperProps={{
-          //   sx: {
-          //     maxHeight: "90vh",
-          //     borderRadius: 3,
-          //     backgroundColor:
-          //       "var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)))",
-          //   },
-          // }}
+          PaperProps={{
+            sx: {
+              backgroundColor: "var(--color-base-100)",
+              borderRadius: isFullScreen ? 0 : "16px",
+            },
+          }}
         >
           {selectedComponent && (
             <>
-              <DialogTitle sx={{ p: 3, pb: 1 }}>
+              <DialogTitle
+                sx={{
+                  p: 2,
+                  pb: 1,
+                  borderBottom: "1px solid var(--color-base-300)",
+                }}
+              >
                 <Box
                   display="flex"
                   alignItems="center"
                   justifyContent="space-between"
                 >
                   <Box>
-                    <Typography
-                      variant="h4"
-                      component="h2"
-                      fontWeight="bold"
-                      color="primary"
-                      gutterBottom
-                    >
+                    <Typography variant="h5" component="h2" fontWeight="bold">
                       {selectedComponent.name}
                     </Typography>
-                    <Typography
-                      variant="body1"
-                      color="text.secondary"
-                      sx={{ mb: 2 }}
-                    >
+                    <Typography variant="body2" color="text.secondary">
                       {selectedComponent.description}
                     </Typography>
-                    <Box
-                      display="flex"
-                      alignItems="center"
-                      gap={1}
-                      flexWrap="wrap"
-                    >
-                      <Chip
-                        label={selectedComponent.category}
-                        color="primary"
-                        variant="filled"
-                        size="medium"
-                      />
-                      {selectedComponent.tags?.map((tag) => (
-                        <Chip
-                          key={tag}
-                          label={tag}
-                          variant="outlined"
-                          size="small"
-                          color="default"
-                        />
-                      ))}
-                    </Box>
                   </Box>
-                  <IconButton
-                    aria-label="close"
-                    onClick={closeDialog}
-                    sx={{
-                      color: "text.secondary",
-                      "&:hover": {
-                        color: "error.main",
-                        backgroundColor: "error.light",
-                      },
-                    }}
-                  >
-                    <CloseIcon />
-                  </IconButton>
+                  <Box>
+                    <IconButton
+                      onClick={toggleFullScreen}
+                      aria-label="toggle fullscreen"
+                    >
+                      {isFullScreen ? (
+                        <FullscreenExitIcon />
+                      ) : (
+                        <FullscreenIcon />
+                      )}
+                    </IconButton>
+                    <IconButton onClick={closeDialog} aria-label="close">
+                      <CloseIcon />
+                    </IconButton>
+                  </Box>
                 </Box>
               </DialogTitle>
 
-              <DialogContent dividers sx={{ p: 0 }}>
-                {/* <Paper
-                  elevation={2}
-                  sx={{
-                    p: 4,
-                    borderRadius: 2,
-                    backgroundColor:
-                      "var(--fallback-b2,oklch(var(--b2)/var(--tw-bg-opacity)))",
-                    border:
-                      "1px solid var(--fallback-b3,oklch(var(--b3)/var(--tw-bg-opacity)))",
-                  }}
-                > */}
-                <selectedComponent.component />
-                {/* </Paper> */}
+              <DialogContent
+                dividers
+                sx={{ p: 0, bgcolor: "var(--color-base-200)" }}
+              >
+                <Box sx={{ p: 3 }}>
+                  <selectedComponent.component />
+                </Box>
               </DialogContent>
-
-              {/* <DialogActions sx={{ p: 3, pt: 2 }}>
-                <Button
-                  onClick={closeDialog}
-                  variant="outlined"
-                  color="inherit"
-                  startIcon={<CloseIcon />}
-                  sx={{ minWidth: 120 }}
-                >
-                  Close
-                </Button>
-              </DialogActions> */}
             </>
           )}
         </Dialog>
