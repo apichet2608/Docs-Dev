@@ -1,0 +1,23 @@
+{
+  "rewrites": [
+    {
+      "source": "/smart-factory-ui/(.*)",
+      "destination": "/$1"
+    },
+    {
+      "source": "/smart-factory-ui",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/smart-factory-ui/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
+}
