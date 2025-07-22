@@ -1,11 +1,4 @@
 {
-  "buildCommand": "vite build --mode production",
-  "typescript": {
-    "ignoreBuildErrors": true
-  },
-  "functions": {
-    "app/api/**/*.ts": {
-      "runtime": "nodejs18.x"
-    }
-  }
+  "buildCommand": "vite build",
+  "ignoreCommand": "exit 0"
 }
