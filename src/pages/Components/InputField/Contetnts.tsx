@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import FormField from "./FormField";
 
 const InputFieldContents = () => {

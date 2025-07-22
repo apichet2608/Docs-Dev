@@ -19,7 +19,7 @@ interface FormFieldProps {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => void;
-  type?: "text" | "number" | "date" | "textarea" | "select";
+  type?: "text" | "number" | "date" | "textarea" | "select" | "password";
   placeholder?: string;
   required?: boolean;
   options?: string[];
