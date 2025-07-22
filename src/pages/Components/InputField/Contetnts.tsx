@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import FormField from "./Formfield";
+import FormField from "./FormField";
 
 const InputFieldContents = () => {
   // State สำหรับแต่ละ input type
