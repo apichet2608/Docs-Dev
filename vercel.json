@@ -1,4 +1,0 @@
-{
-  "buildCommand": "vite build",
-  "ignoreCommand": "exit 0"
-}
